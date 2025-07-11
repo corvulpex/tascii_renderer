@@ -1,6 +1,8 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
+#include <memory>
+#include <vector>
 struct Color {
 	char r;
 	char g;
@@ -19,5 +21,7 @@ struct terminal_info {
 };
 
 struct terminal_info get_terminal_info();
+
+int write_to_terminal(std::shared_ptr<std::vector<std::vector<Pixel>>> buf);
 
 #endif

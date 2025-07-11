@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 project(TRenderer)
 
 
@@ -15,6 +17,9 @@ set(SOURCES
     src/terminal.cpp
 	src/wf_obj.cpp
 	src/vertex_transformer.cpp
+	src/math_helper.cpp
+	src/object.cpp
+	src/rasterizer.cpp
 )
 
 add_executable(TRenderer ${SOURCES})
