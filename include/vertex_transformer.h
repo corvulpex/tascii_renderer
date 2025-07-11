@@ -17,4 +17,7 @@ const struct {
 
 void transform_perspective(std::shared_ptr<std::vector<triangle>> triangles);
 
+
+std::shared_ptr<std::vector<triangle>> ndc_to_window_cords(std::shared_ptr<std::vector<triangle>> triangles);
+
 #endif

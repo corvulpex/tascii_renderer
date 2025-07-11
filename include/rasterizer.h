@@ -7,6 +7,6 @@
 #include <vector>
 
 
-int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, std::shared_ptr<std::vector<triangle>>);
+int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, std::shared_ptr<std::vector<triangle>> triangles);
 
 #endif

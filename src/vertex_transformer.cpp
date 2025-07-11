@@ -1,10 +1,12 @@
 #include "vertex_transformer.h"
+#include "math_helper.h"
+#include "wf_obj.h"
 #include <Eigen/Eigen>
 #include <Eigen/src/Core/Matrix.h>
 #include <iostream>
 #include <memory>
 #include <vector>
-
+#include "math_helper.h"
 
 const Eigen::Matrix4f perspective_matrix {
 	{view_frustrum.n, 0, 0, 0},
@@ -41,3 +43,26 @@ void transform_perspective(std::shared_ptr<std::vector<triangle>> triangles) {
 	}
 
 }
+
+std::shared_ptr<std::vector<triangle>> ndc_to_window_cords(std::shared_ptr<std::vector<triangle>> triangles, size_t window_height, size_t window_width) {
+	std::shared_ptr<std::vector<triangle>> ndc_triangles;
+	for (auto &t: *triangles) {
+		if (all_verteces_out_of_range(t, -1.0, 1.0))
+			continue;
+
+		triangle transformed_triangle;
+
+		
+		transformed_triangle.v1.pos = {map_num_from_range_to_range(t.v1.pos.x(), -1.0, 1.0, 0, window_width),map_num_from_range_to_range(t.v1.pos.y(), -1.0, 1.0, 0, window_height), t.v1.pos.z(), 0};
+	  	transformed_triangle.v2.pos = {map_num_from_range_to_range(t.v1.pos.x(), -1.0, 1.0, 0, window_width), map_num_from_range_to_range(t.v1.pos.y(), -1.0, 1.0, 0, window_height), t.v1.pos.z(), 0};
+	  	transformed_triangle.v3.pos = {map_num_from_range_to_range(t.v1.pos.x(), -1.0, 1.0, 0, window_width), map_num_from_range_to_range(t.v1.pos.y(), -1.0, 1.0, 0, window_height), t.v1.pos.z(), 0};
+		
+			
+		ndc_triangles->push_back(transformed_triangle);
+
+	}
+
+	return ndc_triangles;
+}
+
+
