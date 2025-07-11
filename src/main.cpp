@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "terminal.h"
-#include "obj.h"
+#include "wf_obj.h"
 
 int main() {
 	std::vector<triangle> triangles = load_obj("../test.obj");

@@ -1,12 +1,16 @@
 #include <iostream>
 #include <fstream>
 
-#include "obj.h"
+#include "wf_obj.h"
 
 
 std::vector<triangle> load_obj(const std::string &path) {
     std::ifstream file;
     file.open(path);
+	if (!file.is_open()) {
+		return std::vector<triangle>();
+	}
+
 
     size_t vertex_count = 0;
     size_t face_count = 0;
@@ -40,5 +44,6 @@ std::vector<triangle> load_obj(const std::string &path) {
         }
     }
 
+	file.close();
 	return triangles;
 }

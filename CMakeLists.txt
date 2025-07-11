@@ -9,7 +9,7 @@ project(TRenderer)
 set(SOURCES
     src/main.cpp
     src/terminal.cpp
-	src/obj.cpp
+	src/wf_obj.cpp
 )
 
 add_executable(TRenderer ${SOURCES})
