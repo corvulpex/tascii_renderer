@@ -4,14 +4,14 @@
 #include "obj.h"
 
 
-struct triangle* load_obj(std::string &path) {
+std::vector<triangle> load_obj(const std::string &path) {
     std::ifstream file;
     file.open(path);
 
     size_t vertex_count = 0;
     size_t face_count = 0;
 
-    string line;
+	std::string line;
     while (std::getline(file, line)) {
         if (line[0] == 'v') {
             vertex_count++;
@@ -21,19 +21,24 @@ struct triangle* load_obj(std::string &path) {
         }
     }
 
-    vertex *verteces = vertex[vertex_count];
+    vertex verteces[vertex_count];
     size_t vi = 0;
+	std::vector<triangle> triangles;
 
     file.clear();
-    file.seekg(0, ios::beg);
+    file.seekg(0, std::ios::beg);
 
     while(std::getline(file, line)) {
         if(line[0] == 'v') {
-            vertex v = verteces[vi++];
-            sscanf("v %d %d %d", &v.x, &v.y, &v.z);
+			sscanf(line.c_str(), "v %f %f %f", &verteces[vi].x, &verteces[vi].y, &verteces[vi].z);
+			vi++;
         }
         else if (line[0] == 'f') {
-
+			int vi[3];
+			sscanf(line.c_str(), "f %d %d %d", vi, vi + 1, vi + 2);
+			triangles.emplace_back(verteces[vi[0] - 1], verteces[vi[1] - 1], verteces[vi[2] - 1]);
         }
     }
+
+	return triangles;
 }

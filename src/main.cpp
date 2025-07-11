@@ -1,8 +1,10 @@
 #include <iostream>
+#include <vector>
 #include "terminal.h"
+#include "obj.h"
 
 int main() {
-    struct terminal_info ti;
-    ti = get_terminal_info();
-    std::cout << "Height: " << ti.height << " Width: " << ti.width << "  \n";
+	std::vector<triangle> triangles = load_obj("../test.obj");
+	
+	std::cout << "First vertex: " << triangles[0].v1.x << " " << triangles[0].v1.y << " " << triangles[0].v1.z << "\n";
 }
