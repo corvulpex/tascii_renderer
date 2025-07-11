@@ -2,6 +2,7 @@
 #include "wf_obj.h"
 #include <Eigen/src/Core/Matrix.h>
 #include <cstdlib>
+#include <limits>
 
 float triangle_area(Eigen::Vector2f v1, Eigen::Vector2f v2, Eigen::Vector2f v3) {
 	return 0.5 * std::abs((v1.x() * (v2.y() - v3.y()) + v2.x() * (v3.y() - v1.y()) +  v3.x() * (v1.y() - v2.y())));
@@ -12,6 +13,9 @@ float triangle_area(Eigen::Vector2f v1, Eigen::Vector2f v2, Eigen::Vector2f v3) 
 
 Eigen::Vector3f barycentric_coords(const triangle &t, Eigen::Vector2f p) {
 	float t_area = triangle_area({t.v1.pos.x(), t.v1.pos.y()}, {t.v2.pos.x(), t.v2.pos.y()}, {t.v3.pos.x(), t.v3.pos.y()});
+	if (t_area == 0) {
+		return {std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()};
+	}
 	float p12_area = triangle_area({p.x(), p.y()}, {t.v1.pos.x(), t.v1.pos.y()}, {t.v2.pos.x(), t.v2.pos.y()});
 	float p23_area = triangle_area({p.x(), p.y()}, {t.v2.pos.x(), t.v2.pos.y()}, {t.v3.pos.x(), t.v3.pos.y()});
 	float p31_area = triangle_area({p.x(), p.y()}, {t.v3.pos.x(), t.v3.pos.y()}, {t.v1.pos.x(), t.v1.pos.y()});

@@ -2,7 +2,6 @@
 #include "math_helper.h"
 #include <Eigen/src/Core/Matrix.h>
 
-
 int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, std::shared_ptr<std::vector<triangle>> triangles) {
 
 	int buffer_height = screen_buffer->size();
@@ -12,7 +11,6 @@ int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, st
 	int buffer_width = (*screen_buffer)[0].size();
 	if (buffer_width == 0)
 		return 0;
-
 
 	for (auto t: *triangles) {
 		for (size_t h = 0; h < buffer_height; h++) {
@@ -30,7 +28,7 @@ int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, st
 
 				(*screen_buffer)[h][w].depth = ip_z;	
 				(*screen_buffer)[h][w].color = {static_cast<char>(255), 0, 0, static_cast<char>(255)};
-
+				
 			}
 		}
 	}
