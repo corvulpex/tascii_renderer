@@ -7,7 +7,7 @@
 
 const struct {
 	float n = 1.0;
-	float f = 10.0;
+	float f = 50.0;
 	float l = -0.5;
 	float r = 0.5;
 	float b = -0.5;

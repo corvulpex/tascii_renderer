@@ -3,7 +3,6 @@
 #include "wf_obj.h"
 #include <Eigen/Eigen>
 #include <Eigen/src/Core/Matrix.h>
-#include <iostream>
 #include <memory>
 #include <vector>
 #include "math_helper.h"
