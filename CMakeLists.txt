@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-project(TRenderer)
+project(tascii_renderer)
 
 
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
@@ -22,8 +22,8 @@ set(SOURCES
 	src/rasterizer.cpp
 )
 
-add_executable(TRenderer ${SOURCES})
+add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
-target_link_libraries (TRenderer Eigen3::Eigen)
+target_link_libraries (${CMAKE_PROJECT_NAME} Eigen3::Eigen)
 
-target_include_directories(TRenderer PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
