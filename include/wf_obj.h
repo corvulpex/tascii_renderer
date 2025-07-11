@@ -1,3 +1,6 @@
+#ifndef WF_OBJ_H
+#define WF_OBJ_H
+
 #include <Eigen/Eigen>
 #include <memory>
 #include <string>
@@ -14,3 +17,5 @@ struct triangle {
 };
 
 std::shared_ptr<std::vector<triangle>> load_obj(const std::string &path);
+
+#endif

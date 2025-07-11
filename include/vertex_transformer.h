@@ -1,3 +1,6 @@
+#ifndef VERTEX_TRANSFORMER_H
+#define VERTEX_TRANSFORMER_H
+
 #include "wf_obj.h"
 #include <memory>
 #include <vector>
@@ -13,3 +16,5 @@ const struct {
 
 
 void transform_perspective(std::shared_ptr<std::vector<triangle>> triangles);
+
+#endif

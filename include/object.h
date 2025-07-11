@@ -1,3 +1,6 @@
+#ifndef OBJECT_H
+#define OBJECT_H
+
 #include "wf_obj.h"
 
 class Object {
@@ -7,3 +10,5 @@ class Object {
 	
 
 };
+
+#endif
