@@ -1,10 +1,13 @@
 #include <iostream>
+#include <memory>
 #include <vector>
 #include "terminal.h"
-#include "wf_obj.h"
+#include "vertex_transformer.h"
 
 int main() {
-	std::vector<triangle> triangles = load_obj("../test.obj");
+	std::shared_ptr<std::vector<triangle>> triangles = load_obj("../test.obj");
+
+	transform_perspective(triangles);
 	
-	std::cout << "First vertex: " << triangles[0].v1.x << " " << triangles[0].v1.y << " " << triangles[0].v1.z << "\n";
+	std::cout << "First vertex:\n" << (*triangles)[0].v1.pos << "\n";
 }
