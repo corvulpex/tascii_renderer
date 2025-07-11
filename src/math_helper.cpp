@@ -1,6 +1,7 @@
 #include "math_helper.h"
 #include "wf_obj.h"
 #include <Eigen/src/Core/Matrix.h>
+#include <algorithm>
 #include <cstdlib>
 #include <limits>
 
@@ -43,4 +44,12 @@ float map_num_from_range_to_range(float n, float a, float b, float c, float d) {
 	return c + ((d - c) / (b - a))* (n - a);
 }
 
+
+Eigen::Vector4f triangle_bounding_box(triangle &t) {
+	float x_min = std::min({t.v1.pos.x(), t.v2.pos.x(), t.v3.pos.x()});
+	float y_min = std::min({t.v1.pos.y(), t.v2.pos.y(), t.v3.pos.y()});
+	float x_max = std::max({t.v1.pos.x(), t.v2.pos.x(), t.v3.pos.x()});
+	float y_max = std::max({t.v1.pos.y(), t.v2.pos.y(), t.v3.pos.y()});
+	return {x_min, y_min, x_max, y_max};
+}
 

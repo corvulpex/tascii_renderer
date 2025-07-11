@@ -16,7 +16,7 @@ int main() {
 
 	auto obj = new Object(triangles);
 
-	obj->translate({0, 0, -20});
+	obj->translate({0, 0, -10});
 	struct terminal_info ti = get_terminal_info();
 
 	transform_perspective(triangles);

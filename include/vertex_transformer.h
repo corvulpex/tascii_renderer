@@ -8,8 +8,8 @@
 const struct {
 	float n = 1.0;
 	float f = 50.0;
-	float l = -0.5;
-	float r = 0.5;
+	float l = -1;
+	float r = 1;
 	float b = -0.5;
 	float t = 0.5;
 } view_frustrum;

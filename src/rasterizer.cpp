@@ -1,6 +1,7 @@
 #include "rasterizer.h"
 #include "math_helper.h"
 #include <Eigen/src/Core/Matrix.h>
+#include <algorithm>
 
 int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, std::shared_ptr<std::vector<triangle>> triangles) {
 
@@ -13,8 +14,9 @@ int rasterize(std::shared_ptr<std::vector<std::vector<Pixel>>> screen_buffer, st
 		return 0;
 
 	for (auto t: *triangles) {
-		for (size_t h = 0; h < buffer_height; h++) {
-			for (size_t w = 0; w < buffer_width; w++) {
+		Eigen::Vector4f bb = triangle_bounding_box(t);
+		for (size_t h = std::max(0, static_cast<int>(bb.y())); h < std::min(buffer_height, static_cast<int>(bb.w() + 1.0f)); h++) {
+			for (size_t w = std::max(0, static_cast<int>(bb.x())); w < std::min(buffer_width, static_cast<int>(bb.z() + 1.0f)); w++) {
 				Eigen::Vector3f bc_cords = barycentric_coords(t, {(float) w + 0.5, (float) h + 0.5});
 				
 				if (bc_cords.x() + bc_cords.y() + bc_cords.z() > 1.0f)
