@@ -2,7 +2,6 @@
 #include <limits>
 #include <memory>
 #include <vector>
-#include "object.h"
 #include "rasterizer.h"
 #include "terminal.h"
 #include "vertex_transformer.h"
@@ -10,28 +9,20 @@
 int main() {
 	std::cout << "Starting...\n";
 
-	std::shared_ptr<std::vector<triangle>> triangles = load_obj("../teapot.obj");
+	std::shared_ptr<Object> object = load_obj("../teapot.obj");
 
-	std::cout << "Loaded object\n";
-
-	auto obj = new Object(triangles);
-
-	obj->translate({0, 0, -10});
+	object->translate({0, 0, -10});
 	struct terminal_info ti = get_terminal_info();
 
-	transform_perspective(triangles);
+	std::shared_ptr<std::vector<vertex>> trans_verteces = transform_perspective(object->verteces);
 
-	std::cout << "Transformed perspective\n";
+	ndc_to_window_cords(trans_verteces, ti.height, ti.width); 
 
-	std::shared_ptr<std::vector<triangle>> window_triangles = ndc_to_window_cords(triangles, ti.height, ti.width); 
-	std::cout << "Mapped to window coordinates\n";
-	std::cout << "Triangle count: " << (*triangles).size() << "\n";
- 
 	auto buffer = std::make_shared<std::vector<std::vector<Pixel>>>(ti.height, std::vector<Pixel>(ti.width, Pixel{{0, 0, 0, 0}, std::numeric_limits<float>::max()}));
 
-	rasterize(buffer, window_triangles);
-	std::cout << "Rasterized\n";
-	
+	std::shared_ptr<std::vector<triangle>> triangles = filter_triangles(object->triangles, trans_verteces, ti.width	, ti.height);
+
+	rasterize(buffer, trans_verteces, triangles);
 
 	write_to_terminal(buffer);
 }

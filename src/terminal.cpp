@@ -44,6 +44,7 @@ int write_to_terminal(std::shared_ptr<std::vector<std::vector<Pixel>>> buf){
 			i++;
 		}
 	}
+
 	strcpy(output + i + 5, "\033[0m");
 
 	std::cout << "\033[2J\033[1;1H";

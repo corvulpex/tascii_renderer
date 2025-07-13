@@ -18,7 +18,6 @@ set(SOURCES
 	src/wf_obj.cpp
 	src/vertex_transformer.cpp
 	src/math_helper.cpp
-	src/object.cpp
 	src/rasterizer.cpp
 )
 

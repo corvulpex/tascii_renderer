@@ -15,9 +15,10 @@ const struct {
 } view_frustrum;
 
 
-void transform_perspective(std::shared_ptr<std::vector<triangle>> triangles);
+std::shared_ptr<std::vector<vertex>> transform_perspective(std::shared_ptr<const std::vector<vertex>> verteces);
 
+void ndc_to_window_cords(std::shared_ptr<std::vector<vertex>> verteces, size_t window_height, size_t window_width);
 
-std::shared_ptr<std::vector<triangle>> ndc_to_window_cords(std::shared_ptr<std::vector<triangle>> triangles, size_t window_height, size_t window_width);
+std::shared_ptr<std::vector<triangle>> filter_triangles(std::shared_ptr<std::vector<triangle>> triangles, std::shared_ptr<std::vector<vertex>> verteces, int width, int height);
 
 #endif

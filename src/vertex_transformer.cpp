@@ -24,39 +24,30 @@ const Eigen::Matrix4f normalizing_matrix {
 const Eigen::Matrix4f pp_matrix = normalizing_matrix * perspective_matrix;
 
 
-void transform_perspective(std::shared_ptr<std::vector<triangle>> triangles) {
-
-	for (auto &t: *triangles) {
-		t.v1.pos = (perspective_matrix * t.v1.pos);
-		t.v1.pos = (normalizing_matrix * t.v1.pos);
-		t.v1.pos /= t.v1.pos.w();
-		t.v2.pos = (pp_matrix * t.v2.pos);	
-		t.v2.pos /= t.v2.pos.w();
-		t.v3.pos = (pp_matrix * t.v3.pos);	
-		t.v3.pos /= t.v3.pos.w();
-	}
-
+std::shared_ptr<std::vector<vertex>> transform_perspective(std::shared_ptr<const std::vector<vertex>> verteces) {
+	auto transformed_verteces = std::make_shared<std::vector<vertex>>(verteces->size());
+	
+	for (size_t i = 0; i < verteces->size(); i++) {
+		(*transformed_verteces)[i].pos = (pp_matrix * (*verteces)[i].pos);
+		(*transformed_verteces)[i].pos /= (*transformed_verteces)[i].pos.w();
+	} 
+	return transformed_verteces;
 }
 
-std::shared_ptr<std::vector<triangle>> ndc_to_window_cords(std::shared_ptr<std::vector<triangle>> triangles, size_t window_height, size_t window_width) {
-	auto ndc_triangles = std::make_shared<std::vector<triangle>>();
-	for (auto &t: *triangles) {
-		if (all_verteces_out_of_range(t, -1.0, 1.0))
-			continue;
-
-		triangle transformed_triangle;
-
-		
-		transformed_triangle.v1.pos = {map_num_from_range_to_range(t.v1.pos.x(), -1.0, 1.0, 0, window_width),map_num_from_range_to_range(t.v1.pos.y(), -1.0, 1.0, 0, window_height), t.v1.pos.z(), 0};
-	  	transformed_triangle.v2.pos = {map_num_from_range_to_range(t.v2.pos.x(), -1.0, 1.0, 0, window_width), map_num_from_range_to_range(t.v2.pos.y(), -1.0, 1.0, 0, window_height), t.v2.pos.z(), 0};
-	  	transformed_triangle.v3.pos = {map_num_from_range_to_range(t.v3.pos.x(), -1.0, 1.0, 0, window_width), map_num_from_range_to_range(t.v3.pos.y(), -1.0, 1.0, 0, window_height), t.v3.pos.z(), 0};
-		
-		
-		ndc_triangles->push_back(transformed_triangle);
-
+void ndc_to_window_cords(std::shared_ptr<std::vector<vertex>> verteces, size_t window_height, size_t window_width) {
+	for (auto &v: *verteces) {
+		v.pos = {map_num_range(v.pos.x(), -1.0, 1.0, 0, window_width),map_num_range(v.pos.y(), -1.0, 1.0, 0, window_height), v.pos.z(), 0};
 	}
-
-	return ndc_triangles;
 }
 
 
+std::shared_ptr<std::vector<triangle>> filter_triangles(std::shared_ptr<std::vector<triangle>> triangles, std::shared_ptr<std::vector<vertex>> verteces, int width, int height) {
+	auto vx = *verteces;
+	auto ft = std::make_shared<std::vector<triangle>>();
+	for (auto t: *triangles) {
+		if (!all_verteces_out_of_range(vx[t.v1], vx[t.v2], vx[t.v3], 0.5, 0.5, (float) width - 0.5, (float) height - 0.5)) {
+			ft->push_back(t);
+		}
+	}
+	return ft;
+}
