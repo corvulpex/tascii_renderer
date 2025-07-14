@@ -1,18 +1,12 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
+#include <Eigen/Eigen>
 #include <memory>
 #include <vector>
-struct Color {
-	char r;
-	char g;
-	char b;
-	char a;
-};
 
 struct Pixel {
-	Color color;
-	float depth;
+	Eigen::Vector4f color;
 };
 
 struct terminal_info {

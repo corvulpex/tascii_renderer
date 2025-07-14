@@ -1,4 +1,5 @@
 #include <Eigen/Eigen>
+#include <Eigen/src/Core/Matrix.h>
 #include <fstream>
 #include <memory>
 
@@ -23,14 +24,14 @@ std::shared_ptr<Object> load_obj(const std::string &path) {
 
 	std::string line;
 	auto verteces_pointer = std::make_shared<std::vector<vertex>>();
-	std::vector<vertex> verteces = *verteces_pointer;
 	auto triangles_pointer = std::make_shared<std::vector<triangle>>();
 
+	// scanning verteces and triangles from file
     while(std::getline(file, line)) {
         if(line[0] == 'v') {
 			float f[3];
 			sscanf(line.c_str(), "v %f %f %f", f, f + 1, f + 2);
-			verteces_pointer->emplace_back(Eigen::Vector4f{f[0], f[1], f[2], 1.0f});
+			verteces_pointer->emplace_back(Eigen::Vector4f{f[0], f[1], f[2], 1.0f}, Eigen::Vector4f{0, 255, 0, 255}, Eigen::Vector3f{});
         }
         else if (line[0] == 'f') {
 			int vi[3];
@@ -40,6 +41,24 @@ std::shared_ptr<Object> load_obj(const std::string &path) {
     }
 
 	file.close();
+
+	std::vector<vertex> verteces = *verteces_pointer;
+	// calculating normals
+	for (auto &t: *triangles_pointer) {
+		Eigen::Vector3f A = verteces[t.v3].pos.head<3>() - verteces[t.v1].pos.head<3>();
+		Eigen::Vector3f B = verteces[t.v2].pos.head<3>() - verteces[t.v1].pos.head<3>();
+		
+		Eigen::Vector3f t_normal = A.cross(B);
+		
+		verteces[t.v1].normal += t_normal;
+		verteces[t.v2].normal += t_normal;
+		verteces[t.v3].normal += t_normal;
+	}
+	for (auto &v: verteces) {
+		v.normal.normalize();
+	}
+
+
 	auto object = std::make_shared<Object>(triangles_pointer, verteces_pointer);
 	return object;
 }

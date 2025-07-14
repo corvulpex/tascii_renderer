@@ -2,11 +2,14 @@
 #define WF_OBJ_H
 
 #include <Eigen/Eigen>
+#include <Eigen/src/Core/Matrix.h>
 #include <memory>
 #include <string>
 
 struct vertex {
 	Eigen::Vector4f pos;
+	Eigen::Vector4f color;
+	Eigen::Vector3f normal;
 };
 
 struct triangle {

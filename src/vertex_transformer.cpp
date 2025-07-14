@@ -30,6 +30,8 @@ std::shared_ptr<std::vector<vertex>> transform_perspective(std::shared_ptr<const
 	for (size_t i = 0; i < verteces->size(); i++) {
 		(*transformed_verteces)[i].pos = (pp_matrix * (*verteces)[i].pos);
 		(*transformed_verteces)[i].pos /= (*transformed_verteces)[i].pos.w();
+		(*transformed_verteces)[i].color = (*verteces)[i].color;
+		(*transformed_verteces)[i].normal = (*verteces)[i].normal;
 	} 
 	return transformed_verteces;
 }

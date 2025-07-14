@@ -19,6 +19,7 @@ set(SOURCES
 	src/vertex_transformer.cpp
 	src/math_helper.cpp
 	src/rasterizer.cpp
+	src/fragment_processing.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})

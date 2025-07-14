@@ -35,7 +35,7 @@ int write_to_terminal(std::shared_ptr<std::vector<std::vector<Pixel>>> buf){
 	size_t i = 0;
 	for (auto row: (*buf)) {
 		for (auto pix: row) {
-			if (pix.color.a != 0) {
+			if (pix.color.y() != 0) {
 				output[i + 5] = '#';
 			}
 			else {
