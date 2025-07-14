@@ -7,7 +7,7 @@
 
 std::shared_ptr<std::vector<std::vector<Fragment>>> rasterize(terminal_info ti, std::shared_ptr<std::vector<vertex>> verteces, std::shared_ptr<std::vector<triangle>> triangles) {
 
-	auto fragments = std::make_shared<std::vector<std::vector<Fragment>>>(ti.height, std::vector<Fragment>(ti.width, {Eigen::Vector4f{0.0f, 0.0f, 0.0f, 0.0f}, Eigen::Vector3f{0.0f, 0.0f, 0.0f}, std::numeric_limits<float>::max()}));
+	auto fragments = std::make_shared<std::vector<std::vector<Fragment>>>(ti.height, std::vector<Fragment>(ti.width, {Eigen::Vector4f{0.0f, 0.0f, 0.0f, 0.0f}, Eigen::Vector4f{0.0f, 0.0f, 0.0f, 0.0f}, std::numeric_limits<float>::max()}));
 
 	std::vector<vertex> vx = *verteces;
 

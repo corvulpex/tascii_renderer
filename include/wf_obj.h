@@ -9,7 +9,7 @@
 struct vertex {
 	Eigen::Vector4f pos;
 	Eigen::Vector4f color;
-	Eigen::Vector3f normal;
+	Eigen::Vector4f normal;
 };
 
 struct triangle {

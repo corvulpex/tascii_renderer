@@ -31,7 +31,7 @@ std::shared_ptr<Object> load_obj(const std::string &path) {
         if(line[0] == 'v') {
 			float f[3];
 			sscanf(line.c_str(), "v %f %f %f", f, f + 1, f + 2);
-			verteces_pointer->emplace_back(Eigen::Vector4f{f[0], f[1], f[2], 1.0f}, Eigen::Vector4f{0, 255, 0, 255}, Eigen::Vector3f{});
+			verteces_pointer->emplace_back(Eigen::Vector4f{f[0], f[1], f[2], 1.0f}, Eigen::Vector4f{0, 255, 0, 255}, Eigen::Vector4f{0.0f, 0.0f, 0.0f, 0.0f});
         }
         else if (line[0] == 'f') {
 			int vi[3];
@@ -50,9 +50,11 @@ std::shared_ptr<Object> load_obj(const std::string &path) {
 		
 		Eigen::Vector3f t_normal = A.cross(B);
 		
-		verteces[t.v1].normal += t_normal;
-		verteces[t.v2].normal += t_normal;
-		verteces[t.v3].normal += t_normal;
+		Eigen::Vector4f tn4{t_normal.x(), t_normal.y(), t_normal.z(), 0.0f};
+
+		verteces[t.v1].normal += tn4;
+		verteces[t.v2].normal += tn4;
+		verteces[t.v3].normal += tn4;
 	}
 	for (auto &v: verteces) {
 		v.normal.normalize();
